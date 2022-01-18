@@ -1,7 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "hexateam",
-        "MONGO_PASSWORD": "Hexa1000",
-        "MONGO_DB": "RecipeDB"
-    }
-}
