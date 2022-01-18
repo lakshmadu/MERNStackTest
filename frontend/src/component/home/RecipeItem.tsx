@@ -6,6 +6,8 @@ import 'antd/dist/antd.css';
 //import { Button } from 'antd';
 import { DeleteFilled, EditFilled} from '@ant-design/icons';
 import '../../CSS/rootcss/recipeitem.css';
+import { AppDispatch } from '../../redux/store';
+import EditRecipe from './EditRecipe';
 
 export interface IRecipe{
     id:Date,
@@ -16,11 +18,19 @@ export interface IRecipe{
 
 const RecipeItem: React.FC<IRecipe> = ({id,recipeName,ingredient,description }) => {
 
-    const dispatch = useDispatch();
+    const dispatch:AppDispatch = useDispatch();
+
+    const [visibleEdit,setVisibleEdit] = React.useState(false);
+
+    
 
     const handleDeleteClick = () =>{
 		dispatch(deleteRecipe({id}));
 	};
+
+    const editPage = ()=>{
+        setVisibleEdit(true);
+    }
 
     return (
         <>
@@ -35,9 +45,11 @@ const RecipeItem: React.FC<IRecipe> = ({id,recipeName,ingredient,description }) 
                 
                 
                 <DeleteFilled className='recipeitem-div-main-icon-delete' onClick={handleDeleteClick} />
-                <EditFilled className='recipeitem-div-main-icon-edit'/>
+                <EditFilled className='recipeitem-div-main-icon-edit' onClick={editPage} />
             </div>
         </li>
+        
+            {/* <EditRecipe id={id} recipeName={recipeName} ingredient={ingredient} description={description} handleModal={visibleEdit}/> */}
         
             
         </>

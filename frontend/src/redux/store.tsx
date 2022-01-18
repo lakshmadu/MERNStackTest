@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import recipeSlice from "./recipeSlice";
 
 
-export const store = configureStore({
+export const store:any = configureStore({
     reducer:{
         recipes:recipeSlice,
     },

@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import RecipeItem from './RecipeItem';
 import '../../CSS/rootcss/recipelist.css'
+import { IRecipe } from '../../redux/recipeSlice';
+
 
 const RecipeList = () => {
 
@@ -11,7 +13,7 @@ const RecipeList = () => {
     return (
         <div className='recipelist-div'>
             <ul>
-                {recipes.map((recipe)=>(
+                {recipes.map((recipe:IRecipe)=>(
                     <RecipeItem id={recipe.id} recipeName={recipe.recipeName} ingredient={recipe.ingredient} description={recipe.description} />
                 ))}
             </ul>
