@@ -1,27 +1,25 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addRecipe } from '../../redux/recipeSlice';
+import { addRecipe, IRecipe } from '../../redux/recipeSlice';
 import { Button, Input,Modal} from 'antd';
 import 'antd/dist/antd.css';
 import '../../CSS/rootcss/recipeadd.css'
 
-export interface IRecipe{
-    id:Date,
-    recipeName:string,
-    ingredient:string,
-    description:string
-}
+
 
 const RecipeAdd = () => {
     const [isModalVisible, setIsModalVisible] = React.useState(false);
     const dispatch = useDispatch();
 
     const [formvalue, setFormValue] = React.useState({
-        id:new Date(),
+        id:Number,
         recipeName:"",
         ingredient:"",
         description:""
     });
+
+    const num = 0;
+
 
     const handleChange = (event:React.FormEvent<HTMLInputElement>) => {
         setFormValue({
@@ -40,8 +38,8 @@ const RecipeAdd = () => {
         loginFormData.append('description',formvalue.description);
         console.log(loginFormData);
 
-        let myObj = {
-            id:new Date(),
+        let myObj:IRecipe = {
+            id:num+1,
             recipeName:formvalue.recipeName,
             ingredient:formvalue.ingredient,
             description:formvalue.description

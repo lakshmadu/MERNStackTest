@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteRecipe } from '../../redux/recipeSlice';
+import { deleteRecipe, IRecipe } from '../../redux/recipeSlice';
 
 import 'antd/dist/antd.css';
 //import { Button } from 'antd';
@@ -9,12 +9,7 @@ import '../../CSS/rootcss/recipeitem.css';
 import { AppDispatch } from '../../redux/store';
 import EditRecipe from './EditRecipe';
 
-export interface IRecipe{
-    id:Date,
-    recipeName:string,
-    ingredient:string,
-    description:string
-}
+
 
 const RecipeItem: React.FC<IRecipe> = ({id,recipeName,ingredient,description }) => {
 
@@ -49,6 +44,7 @@ const RecipeItem: React.FC<IRecipe> = ({id,recipeName,ingredient,description }) 
             </div>
         </li>
         
+        {}
             {/* <EditRecipe id={id} recipeName={recipeName} ingredient={ingredient} description={description} handleModal={visibleEdit}/> */}
         
             

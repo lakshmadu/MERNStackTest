@@ -3,7 +3,7 @@ import { stat } from "fs";
 import { RootState } from "./store";
 
 export interface IRecipe{
-    id:Date,
+    id:number,
     recipeName:string,
     ingredient:string,
     description:string
@@ -14,7 +14,7 @@ const initialState = [] as IRecipe[];
 export const getRecipeAsync = createAsyncThunk(
 	'recipes/getTodosAsync',
 	async () => {
-		const resp= await fetch('http://localhost:4000/recipes');
+		const resp= await fetch('http://localhost:3018/api/public/get/all/recipe');
 		if (resp.ok) {
 			const recipes = await resp.json();
 			return { recipes };
@@ -24,8 +24,8 @@ export const getRecipeAsync = createAsyncThunk(
 
 export const addRecipeAsync = createAsyncThunk(
 	'recipes/addTodoAsync',
-	async (payload:IRecipe) => {
-		const resp = await fetch('http://localhost:4000/add-recipe', {//wrong url
+	async (payload) => {
+		const resp = await fetch('http://localhost:3018/add-recipe', {//wrong url
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const addRecipeAsync = createAsyncThunk(
 export const deleteRecipeAsync = createAsyncThunk(
 	'recipes/deleteTodoAsync',
 	async (payload:IRecipe) => {
-		const resp = await fetch(`http://localhost:4000/recipe/${payload.id}`, {
+		const resp = await fetch(`http://localhost:3018/recipe/${payload.id}`, {
 			method: 'DELETE',
 		});
 
