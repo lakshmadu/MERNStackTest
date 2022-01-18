@@ -1,14 +1,13 @@
-import { Router } from "express"
-import { getRecipe, addRecipe,updateRecipe,deleteRecipe  } from "../controllers/recipe/index"
+import {Express, Request, Response} from "express";
+import { initRecipeRoutes } from "./recipe";
 
-const router: Router = Router()
+export function initRoutes(app: Express) {
+    /* TOP LEVEL */
+    app.get('/api', (req: Request, res: Response) => res.send("Recipe App Api"));
 
-router.get("/recipes", getRecipe)
+    initRecipeRoutes(app);
 
-router.post("/add-recipe", addRecipe)
-
-router.put("/edit-recipe/:id", updateRecipe)
-
-router.delete("/delete-recipe/:id", deleteRecipe)
-
-export default router
+    /* ALL INVALID REQUESTS */
+    app.get('/', (req: Request, res: Response) => res.redirect(301, "/api"));
+    app.all('*', (req: Request, res: Response) => res.send("Invalid Route"));
+}
