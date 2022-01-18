@@ -1,0 +1,45 @@
+.headerdiv-main-div{
+    height: 400px;
+    width: 100%;
+}
+.header-div-second{
+    position: relative;
+    top: 50px;
+    //bottom: 50px;
+    left: 5%;
+    width: 90%;
+    height: 300px;
+    border-radius: 30px;
+    background-color:White;
+    display: flex;
+
+}
+
+.headerdiv-seconddiv-left{
+    width: 50%;
+    height: 100%;
+    
+}
+
+.headerdiv-seconddiv-right{
+    background-image: url('../../resources/image/headerimg.jpg');
+    width: 50%;
+    height: 100%;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.headerdiv-seconddiv-left-txt1{
+    position: relative;
+    top:20px;
+    left: 5px;
+    font-size: 80px;
+    text-align: left;
+}
+.headerdiv-seconddiv-left-txt2{
+    position: relative;
+    top:20px;
+    left: 5px;
+    font-size: 80px;
+    text-align: left;
+}

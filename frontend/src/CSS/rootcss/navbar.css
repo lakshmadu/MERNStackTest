@@ -1,0 +1,42 @@
+.navbar-main {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  align-items: center;
+}
+
+.navbar-main-second {
+  position: relative;
+  top: 15px;
+  width: 80%;
+  height: 30px;
+  left: 5%;
+  display: flex;
+}
+
+.navebar-main-nav1 {
+  width: 80%;
+  height: 100%;
+}
+
+.navebar-main-nav2 {
+  width: 10%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.navebar-main-nav2:hover {
+  background-color: #f5f5f5;
+}
+
+.navebar-main-nav3 {
+  width: 10%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.navebar-main-nav3:hover {
+  background-color: #f5f5f5;
+}
+
+/*# sourceMappingURL=navbar.css.map */
