@@ -12,7 +12,7 @@ const EditRecipe:React.FC<IRecipe> = ({ id,recipeName,ingredient,description },h
     const dispatch = useDispatch();
 
     const [formvalue, setFormValue] = React.useState({
-        id:Number,
+        id:"",
         recipeName:"",
         ingredient:"",
         description:""
@@ -33,10 +33,10 @@ const EditRecipe:React.FC<IRecipe> = ({ id,recipeName,ingredient,description },h
         loginFormData.append('recipeName',formvalue.recipeName);
         loginFormData.append('ingredient',formvalue.ingredient);
         loginFormData.append('description',formvalue.description);
-        console.log(loginFormData);
+        //console.log(loginFormData);
 
         let myObj:IRecipe = {
-            id:0,
+            id:"",
             recipeName:formvalue.recipeName,
             ingredient:formvalue.ingredient,
             description:formvalue.description

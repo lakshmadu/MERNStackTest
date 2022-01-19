@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteRecipe, IRecipe } from '../../redux/recipeSlice';
+import { deleteRecipe, deleteRecipeAsync, IRecipe } from '../../redux/recipeSlice';
 
 import 'antd/dist/antd.css';
 //import { Button } from 'antd';
@@ -20,7 +20,7 @@ const RecipeItem: React.FC<IRecipe> = ({id,recipeName,ingredient,description }) 
     
 
     const handleDeleteClick = () =>{
-		dispatch(deleteRecipe({id}));
+		dispatch(deleteRecipeAsync({id}))
 	};
 
     const editPage = ()=>{
@@ -40,7 +40,7 @@ const RecipeItem: React.FC<IRecipe> = ({id,recipeName,ingredient,description }) 
                 
                 
                 <DeleteFilled className='recipeitem-div-main-icon-delete' onClick={handleDeleteClick} />
-                <EditFilled className='recipeitem-div-main-icon-edit' onClick={editPage} />
+                <EditFilled className='recipeitem-div-main-icon-edit'  />
             </div>
         </li>
         

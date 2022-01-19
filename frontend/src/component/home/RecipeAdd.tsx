@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addRecipe, IRecipe } from '../../redux/recipeSlice';
+import { addRecipe, addRecipeAsync, IRecipe } from '../../redux/recipeSlice';
 import { Button, Input,Modal} from 'antd';
 import 'antd/dist/antd.css';
 import '../../CSS/rootcss/recipeadd.css'
@@ -12,7 +12,7 @@ const RecipeAdd = () => {
     const dispatch = useDispatch();
 
     const [formvalue, setFormValue] = React.useState({
-        id:Number,
+        id:"",
         recipeName:"",
         ingredient:"",
         description:""
@@ -32,21 +32,21 @@ const RecipeAdd = () => {
         //event.preventDefault();
 
         const loginFormData = new FormData();
-        loginFormData.append('id',new Date().toISOString());
+        loginFormData.append('id',"");
         loginFormData.append('recipeName',formvalue.recipeName);
         loginFormData.append('ingredient',formvalue.ingredient);
         loginFormData.append('description',formvalue.description);
-        console.log(loginFormData);
+        //console.log(loginFormData);
 
         let myObj:IRecipe = {
-            id:num+1,
+            id:"",
             recipeName:formvalue.recipeName,
             ingredient:formvalue.ingredient,
             description:formvalue.description
         }
 
         dispatch(
-            addRecipe(myObj)
+            addRecipeAsync(myObj)
         );       
     }
     const clearAllTxt = () => {
