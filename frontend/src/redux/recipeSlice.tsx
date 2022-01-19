@@ -1,23 +1,31 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { stat } from "fs";
+import React from "react";
+import { json } from "stream/consumers";
 import { RootState } from "./store";
 
 export interface IRecipe{
-    id:Date,
+    id:string,
     recipeName:string,
     ingredient:string,
     description:string
 }
 
-const initialState = [] as IRecipe[];
+const initialState = [] as IRecipe[];let res = [] as IRecipe[];
+
 
 export const getRecipeAsync = createAsyncThunk(
 	'recipes/getTodosAsync',
 	async () => {
-		const resp= await fetch('http://localhost:4000/recipes');
+		const resp= await fetch('http://localhost:3018/api/public/get/all/recipe');
+		let res;
 		if (resp.ok) {
 			const recipes = await resp.json();
-			return { recipes };
+			//res = recipes.data;
+			res=recipes.data
+			//console.log(res)
+			return { res };
+			
 		}
 	}
 );
@@ -25,17 +33,20 @@ export const getRecipeAsync = createAsyncThunk(
 export const addRecipeAsync = createAsyncThunk(
 	'recipes/addTodoAsync',
 	async (payload:IRecipe) => {
-		const resp = await fetch('http://localhost:4000/add-recipe', {//wrong url
+		const resp = await fetch('http://localhost:3018/api/public/add/recipe', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ recipe: payload }),
+			body: JSON.stringify({ recipeName:payload.recipeName,ingredient:payload.ingredient,description:payload.description }),
+			
 		});
-
+		//console.log(payload.recipeName)
 		if (resp.ok) {
 			const recipe = await resp.json();
-			return { recipe };
+			res=recipe.data
+			//console.log(res)
+			return { res };
 		}
 	}
 );
@@ -60,8 +71,8 @@ export const addRecipeAsync = createAsyncThunk(
 
 export const deleteRecipeAsync = createAsyncThunk(
 	'recipes/deleteTodoAsync',
-	async (payload:IRecipe) => {
-		const resp = await fetch(`http://localhost:4000/recipe/${payload.id}`, {
+	async (payload:any) => {
+		const resp = await fetch(`http://localhost:3018/api/public/delete/recipe/${payload.id}`, {
 			method: 'DELETE',
 		});
 
@@ -88,7 +99,7 @@ export const recipeSlice = createSlice({
 			// const selectedRecipe = state.filter((recipe)=> recipe.id === action.payload.id); 
 			// const restRecipes = state.filter((recipe)=> recipe.id !== action.payload.id);
 			const objIndex = state.findIndex((recipe)=> recipe.id === action.payload.id);
-			console.log(objIndex);
+			//console.log(objIndex);
 			// selectedRecipe[0].description=action.payload.description;
 			// selectedRecipe[0].ingredient=action.payload.ingredient; 
 			// selectedRecipe[0].recipeName=action.payload.recipeName;
@@ -105,34 +116,39 @@ export const recipeSlice = createSlice({
             return state.filter((recipe)=> recipe.id !== action.payload.id);
         },
     },
-    extraReducers:{
-        [getRecipeAsync.fulfilled.toString()]:(state:RootState,action:PayloadAction<IRecipe>)=>{
-            return action.payload.id;
-        },
-        [addRecipeAsync.fulfilled.toString()]: (state:RootState, action:PayloadAction<IRecipe>) => {
-            state.push(action.payload);
-        },
-        [deleteRecipeAsync.fulfilled.toString()]: (state:RootState, action:PayloadAction<IRecipe>) => {
-			return state.filter((recipe:IRecipe) => recipe.id !== action.payload.id);
-		},
-    }
-    // extraReducers: {
-	// 	[getRecipeAsync.fulfilled]: (state:RootState, action:PayloadAction<IRecipe>) => {
-	// 		return action.payload.id;
-	// 	},
-	// 	[addRecipeAsync.fulfilled]: (state:RootState, action:PayloadAction<IRecipe>) => {
-	// 		state.push(action.payload.recipes);
-	// 	},
-		// [toggleCompleteAsync.fulfilled]: (state, action) => {
-		// 	const index = state.findIndex(
-		// 		(todo) => todo.id === action.payload.todo.id
-		// 	);
-		// 	state[index].completed = action.payload.todo.completed;
-		// },
-		// [deleteRecipeAsync.fulfilled]: (state:RootState, action:PayloadAction<IRecipe>) => {
-		// 	return state.filter((recipe:IRecipe) => recipe.id !== action.payload.id);
-		// },
-	//},
+	extraReducers:(builder)=>{
+		builder.addCase(getRecipeAsync.fulfilled,(state,action)=>{
+			for(var key in action.payload?.res){
+				const k = action.payload?.res[key];
+				const st = {
+					id: k._id,
+					recipeName:k.recipeName,
+					ingredient:k.ingredient,
+					description:k.description
+				}
+				//console.log(k);
+				state.push(st);
+			}
+			
+		})
+		.addCase(addRecipeAsync.fulfilled,(state,action)=>{
+			var key:any = action.payload?.res;
+			var st = {
+				id: key._id,
+				recipeName:key.recipeName,
+				ingredient:key.ingredient,
+				description:key.description
+			}
+			//console.log(key);
+			state.push(st)
+			
+
+		})
+		.addCase(deleteRecipeAsync.fulfilled,(state,action)=>{
+			return state.filter((recipe)=> recipe.id !== action.payload?.id);
+		});
+	}
+    
 })
 
 export const { addRecipe, deleteRecipe} = recipeSlice.actions;
